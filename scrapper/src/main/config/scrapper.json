@@ -1,0 +1,16 @@
+{
+	"thread": 1,
+	"scrapper": [
+		{ 
+		 "site": "fabfurnish",
+		 "active": true,
+		 "urls": [
+		 	{
+		 		"pattern": "http://www.fabfurnish.com/home-decor/handicrafts/?page={{page}}",
+		 		"page":3	
+		  	}
+		  ]
+		}
+		
+	]
+}

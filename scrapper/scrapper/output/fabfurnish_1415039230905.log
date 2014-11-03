@@ -1,0 +1,16 @@
+* fabfurnish Scraper Suite starting
+* Opening http://www.fabfurnish.com/home-decor/handicrafts/?page=3
+TypeError: 'undefined' is not a function (evaluating 'Granify.getShopID()')
+
+  http://cdn.granify.com/assets/javascript.js?id=1080:1
+* Scraping http://www.fabfurnish.com/home-decor/handicrafts/?page=3
+* Opening http://www.fabfurnish.com/home-decor/handicrafts/?page=2
+TypeError: 'undefined' is not a function (evaluating 'Granify.getShopID()')
+
+  http://cdn.granify.com/assets/javascript.js?id=1080:1
+* Scraping http://www.fabfurnish.com/home-decor/handicrafts/?page=2
+* Opening http://www.fabfurnish.com/home-decor/handicrafts/?page=1
+* Scraping http://www.fabfurnish.com/home-decor/handicrafts/?page=1
+* fabfurnish Scraper Suite complete
+* Writing 252 items
+* Saved 252 items

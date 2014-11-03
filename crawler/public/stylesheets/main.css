@@ -1,0 +1,43 @@
+.modal.fade {
+	top: -70%;
+}
+.modal.fade.in {
+	width: 750px;
+	left: 42%;
+}
+.modal-body {
+max-height: 410px;
+padding: 10px 15px;
+overflow-y: auto;
+}
+.submitform label
+{
+	width:110px;
+	float:left;
+	margin-left: 15px;
+}
+.submitform input[type=text]
+{
+	width:200px;
+	float:left;
+}
+.submitform textarea
+{
+	width: 200px;
+	height: 95px;
+	float: left;
+	margin-bottom: 5px;
+	border-radius: 3px;
+	border: 1px solid #CCC;
+}
+.submitform input[type=search]
+{
+	width:200px;
+	float:left;
+}
+.submitform select
+{
+	width:210px;
+	float:left;
+	border-radius: 3px;
+}
