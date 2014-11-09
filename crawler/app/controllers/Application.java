@@ -39,6 +39,8 @@ public static String root;
 			root =  "C:\\home\\scrapper";
 		} else if (os.indexOf("mac") >=0 ) {
 			root = "/home/scrapper";
+		} else {
+			root = "/home/scrapper";
 		}
 }
 
