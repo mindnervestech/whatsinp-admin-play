@@ -53,7 +53,7 @@
     						At @data.site
     				</a>
     			</td>
-    			<td>
+    			<td
     				Price: @data.regularPrice
     				<br>
     				Special Price: @data.specialPrice
@@ -84,44 +84,57 @@
       <div class="modal-body">
       <div id='TextBoxesGroup'>
 	  		<div id="TextBoxDiv1" class="submitform">
-	  			<label>Name</label>
-      			<input type="text" id="pdname" name="pdname" required>
+	  			<label>Product Name</label>
+      			<input type="text" id="pdproname" name="pdproname" required>
 	  			<label>SKU</label>
       			<input type="text" id="pdsku" name="pdsku" required>
-	  			<label>Description</label>
-      			<textarea id="pddesc" name="pddesc" required></textarea>
-	  			<label>Weight</label>
-      			<input type="text" id="pdweight" name="pdweight" required>
-	  			<label>Status</label>
-      			<select id="pdselect" name="pdselect">
-      				<option value="Enable">Enable</option>
-      				<option value="Disable">Disable</option>
-      			</select>
-	  			<label>Visibility</label>
-      			<select id="pdvisible" name="pdvisible">
-      				<option value="Visible">Visible</option>
-      				<option value="Hidden">Hidden</option>
-      			</select>
-	  			<label>Short Description</label>
-      			<textarea id="pdshortdesc" name="pdshortdesc" required></textarea>
-	  			<label>Search</label>
-      			<input type="text" id="pdsearch" name="pdsearch" required>
-	  			<label>Quantity</label>
-      			<input type="text" id="pdquantity" name="pdquantity" required>
-	  			<label>Price</label>
-      			<input type="text" id="pdprice" name="pdprice" required>
-	  			<label>Meta Description</label>
-      			<textarea id="pdmetadesc" name="pdmetadesc" required></textarea>
-	  			<label>Tax Class</label>
-      			<input type="text" id="pdtaxclass" name="pdtaxclass" required>
-	  			<label>Categories</label>
-      			<input type="text" id="pdcategories" name="pdcategories" required>
+	  			<label>Category Id</label>
+				<select name = "pdcategories" id="pdcategories" multiple>
+		    		<option value="22">handicraft</option>
+		    		<option value="21">food</option>
+		    		<option value="23">antique</option>
+		    		<option value="8">rajasthan food</option>
+		    		<option value="27">rajasthan handicraft</option>
+		    		<option value="4">rajasthan</option>
+		    		<option value="5">punjab</option>
+		    		<option value="28">punjab-food</option>
+		    		
+				</select>	
+      			<!-- <input type="text" name="pdcategories" required> -->
+	  			<label>Name</label>
+      			<input type="text" id="pdname" name="pdname" required>
+	  			<label>Url Key</label>
+      			<input type="text" id="pdurlkey" name="pdurlkey" required>
 	  			<label>Meta Title</label>
       			<input type="text" id="pdmetatitle" name="pdmetatitle" required>
-	  			<label>Meta Keywords</label>
-      			<input type="text" id="pdmetakeywords" name="pdmetakeywords" required>
+	  			<label>Meta Description</label>
+      			<textarea id="pdmetadesc" name="pdmetadesc" required></textarea>
 	  			<label>Images</label>
       			<input type="text" id="pdimages" name="pdimages" required>
+	  			<label>Small Image</label>
+      			<input type="text" id="pdsmallimages" name="pdsmallimages" required>
+	  			<label>Thumbnail</label>
+      			<input type="text" id="pdthumbnail" name="pdthumbnail" required>
+	  			<label>Rotator Image</label>
+      			<input type="text" id="pdrotatorimage" name="pdrotatorimage" required>
+	  			<label>Image Label</label>
+      			<input type="text" id="pdimagelabel" name="pdimagelabel" required>
+	  			<label>URL Path</label>
+      			<input type="text" id="pdurlpath" name="pdurlpath" required>
+	  			<label>Weight(number)</label>
+      			<input type="text" id="pdweight" name="pdweight" required>
+	  			<label>Price(number)</label>
+      			<input type="text" id="pdprice" name="pdprice" required>
+	  			<label>Special Price(number)</label>
+      			<input type="text" id="pdspclprice" name="pdspclprice" required>
+	  			<label>Description</label>
+      			<textarea id="pddesc" name="pddesc" required></textarea>
+	  			<label>Short Description</label>
+      			<textarea id="pdshortdesc" name="pdshortdesc" required></textarea>
+	  			<label>Meta Keywords</label>
+      			<input type="text" id="pdmetakeywords" name="pdmetakeywords" required>
+	  			<label>Special From Date</label>
+      			<input type="text" id="pdspclfromdate" name="pdspclfromdate" required>
       		</div>
       </div>		
         <!-- <input type="button" class="btn" id="addButton" value="Add"> -->
@@ -166,26 +179,39 @@
     $("#saveButton").click(function () {
     	console.log(Id);
     	
+    	var temp = new Array();
+    	$('#pdcategories :selected').each(function(i, selected) {
+    		temp[i] = $(selected).val();
+        });
+    	console.log(temp);
+    	console.log($("#pdcategories").val());
+    	var jsonString = JSON.stringify(temp);
     	$.ajax({
     		url: "/saveKeyValue",
     		  type: "POST",
-    		  data: {pdname:$("#pdname").val(),
+    		  data: {
+    			  pdproname:$("#pdproname").val(),
     			  pdsku:$("#pdsku").val(),
-    			  pddesc:$("#pddesc").val(),
-    			  pdweight:$("#pdweight").val(),
-    			  pdselect:$("#pdselect").val(),
-    			  pdvisible:$("#pdvisible").val(),
-    			  pdshortdesc:$("#pdshortdesc").val(),
-    			  pdsearch:$("#pdsearch").val(),
-    			  pdquantity:$("#pdquantity").val(),
-    			  pdprice:$("#pdprice").val(),
-    			  pdmetadesc:$("#pdmetadesc").val(),
-    			  pdtaxclass:$("#pdtaxclass").val(),
-    			  pdcategories:$("#pdcategories").val(),
+    			  pdcategories :jsonString,
+    			  pdname:$("#pdname").val(),
+    			  pdurlkey:$("#pdurlkey").val(),
     			  pdmetatitle:$("#pdmetatitle").val(),
-    			  pdmetakeywords:$("#pdmetakeywords").val(),
+    			  pdmetadesc:$("#pdmetadesc").val(),
     			  pdimages:$("#pdimages").val(),
+    			  pdsmallimages:$("#pdsmallimages").val(),
+    			  pdthumbnail:$("#pdthumbnail").val(),
+    			  pdrotatorimage:$("#pdrotatorimage").val(),
+    			  pdimagelabel:$("#pdimagelabel").val(),
+    			  pdurlpath:$("#pdurlpath").val(),
+    			  pdweight:$("#pdweight").val(),
+    			  pdprice:$("#pdprice").val(),
+    			  pdspclprice:$("#pdspclprice").val(),
+    			  pddesc:$("#pddesc").val(),
+    			  pdshortdesc:$("#pdshortdesc").val(),
+    			  pdmetakeywords:$("#pdmetakeywords").val(),
+    			  pdspclfromdate:$("#pdspclfromdate").val(),
     			Id:Id},  
+    			
     	      success:function(data) {
 		    	        console.log('success');
 		    	        $("input:text").val("");
@@ -231,25 +257,29 @@
     		  data: {Id:Id},  
     	      success:function(response) {
 		    	        console.log('update form');
-		    	        //console.log(response);
+		    	        console.log(response);
 		    	        //console.log(response.price);
 		    	        
-		    	          $("#pdname").val(response.productName),
+		    			  $("#pdproname").val(response.product_name),
 		    			  $("#pdsku").val(response.sku),
-		    			  $("#pddesc").val(response.description),
+		    			  $("#pdcategories").val(response.category_ids),
+		    			  $("#pdname").val(response.name),
+		    			  $("#pdurlkey").val(response.url_key),
+		    			  $("#pdmetatitle").val(response.meta_title),
+		    			  $("#pdmetadesc").val(response.meta_description),
+		    			  $("#pdimages").val(response.image),
+		    			  $("#pdsmallimages").val(response.small_image),
+		    			  $("#pdthumbnail").val(response.thumbnail),
+		    			  $("#pdrotatorimage").val(response.rotator_image),
+		    			  $("#pdimagelabel").val(response.image_label),
+		    			  $("#pdurlpath").val(response.url_path),
 		    			  $("#pdweight").val(response.weight),
-		    			  $("#pdselect").val(response.status),
-		    			  $("#pdvisible").val(response.visibility),
-		    			  $("#pdshortdesc").val(response.shortDescription),
-		    			  $("#pdsearch").val(response.search),
-		    			  $("#pdquantity").val(response.quantity),
 		    			  $("#pdprice").val(response.price),
-		    			  $("#pdmetadesc").val(response.metaDescription),
-		    			  $("#pdtaxclass").val(response.taxClass),
-		    			  $("#pdcategories").val(response.categories),
-		    			  $("#pdmetatitle").val(response.metaTitle),
-		    			  $("#pdmetakeywords").val(response.metaKeywords),
-		    			  $("#pdimages").val(response.images),
+		    			  $("#pdspclprice").val(response.special_price),
+		    			  $("#pddesc").val(response.description),
+		    			  $("#pdshortdesc").val(response.short_description),
+		    			  $("#pdmetakeywords").val(response.meta_keyword),
+		    			  $("#pdspclfromdate").val(response.special_from_date),
 
 	    	        	 	 $("#successmsg").css('display','none');
 	    	        	 	 $("#updatemsg").css('display','block');
