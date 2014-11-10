@@ -160,6 +160,8 @@ public class ProductDetails extends Model {
 	public String product_status_changed = "";
 
 	public String product_changed_websites = "";
+	
+	public String generatedcsv;
 
 	public static Finder<Long, ProductDetails> find = new Finder<Long, ProductDetails>(
 			Long.class, ProductDetails.class);
@@ -769,6 +771,14 @@ public class ProductDetails extends Model {
 
 	public static ProductDetails findById(Long id) {
 		return find.byId(id);
+	}
+
+	public String getGeneratedcsv() {
+		return generatedcsv;
+	}
+
+	public void setGeneratedcsv(String generatedCSV) {
+		this.generatedcsv = generatedCSV;
 	}
 
 }

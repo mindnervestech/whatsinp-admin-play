@@ -173,7 +173,7 @@ public static String root;
     	
     }
     public static Result generateCSVFile() {
-    	List<ProductDetails> postLists = ProductDetails.find.where().findList();
+    	List<ProductDetails> postLists = ProductDetails.find.where().eq("generatedcsv", null).findList();
     	CellProcessor[] processors = new CellProcessor[] {
     	new NotNull(), // name
     	new NotNull(), // message
@@ -314,8 +314,11 @@ public static String root;
     	// TODO Auto-generated catch block
     	e.printStackTrace();
     	}
-
-
+    	
+    	for (ProductDetails result : postLists) {
+    		result.setGeneratedcsv(dateName);
+        }
+    	Ebean.save(postLists);
 
 
     	response().setContentType("application/octet-stream");
