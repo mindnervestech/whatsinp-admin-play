@@ -43,7 +43,8 @@
     			</td>
     			<td>
     				
-    				<input type="button" value="Approve" id="approvebutton" data-toggle="modal" data-target="#myModal" onclick="myfunc(@data.id)" >
+    				<input type="button" value="Approve" id="approvebutton" data-toggle="modal" data-target="#myModal" 
+    				onclick="myfunc(@data.id, '@data.name', '@data.image', '@data.regularPrice')" >
     				<input type="button" value="Delete" class="deletebutton" did="@data.id">
     				
     			</td>
@@ -117,10 +118,10 @@
       			<input type="text" id="pdurlpath" name="pdurlpath" required>
 	  			
 	  			<label>Weight(number)</label>
-      			<input type="text" id="pdweight" name="pdweight" required>
+      			<input value="0" type="text" id="pdweight" name="pdweight" required>
 	  			
 	  			<label>Price(number)</label>
-      			<input type="text" id="pdprice" name="pdprice" required>
+      			<input value="0" type="text" id="pdprice" name="pdprice" required>
 	  			
 	  			<label>Special Price(number)</label>
       			<input type="text" id="pdspclprice" name="pdspclprice" required>
@@ -155,8 +156,18 @@
 
 	var Id;
 	var status;
-	function myfunc(rowId) {
+	function myfunc(rowId,name,image,rprice) {
 		Id = rowId;
+		$("#pdimagelabel").val(name);
+		$("#pdsku").val(name);
+		$("#pdproname").val(name);
+		$("#pdname").val(name);
+		$("#pdurlkey").val("/"+name);
+		$("#pdurlpath").val("/"+name);
+		$("#pdimages").val(image);
+		$("#pdsmallimages").val(image);
+		$("#pdthumbnail").val(image);
+		$("#pdprice").val(rprice);
 	}
 
     
