@@ -35,6 +35,8 @@ public class ScrappedData extends Model {
 	
 	public String keyValue;
 	
+	public String sku;
+	
 	public int status;
 	
 	@OneToOne
@@ -147,6 +149,14 @@ public class ScrappedData extends Model {
 
 	public static ScrappedData findById(Long id) {
 		return find.byId(id);
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
 	
 	/*

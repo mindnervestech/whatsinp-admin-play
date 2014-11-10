@@ -44,7 +44,7 @@
     			<td>
     				
     				<input type="button" value="Approve" id="approvebutton" data-toggle="modal" data-target="#myModal" 
-    				onclick="myfunc(@data.id, '@data.name', '@data.image', '@data.regularPrice')" >
+    				onclick="myfunc(@data.id, '@data.name', '@data.image', '@data.regularPrice', @data.specialPrice, @data.sku)" >
     				<input type="button" value="Delete" class="deletebutton" did="@data.id">
     				
     			</td>
@@ -156,10 +156,10 @@
 
 	var Id;
 	var status;
-	function myfunc(rowId,name,image,rprice) {
+	function myfunc(rowId,name,image,rprice,sPrice, sku) {
 		Id = rowId;
 		//$("#pdimagelabel").val(name);
-		$("#pdsku").val(name);
+		$("#pdsku").val(sku);
 		$("#pdproname").val(name);
 		//$("#pdname").val(name);
 		//$("#pdurlkey").val("/"+name);
@@ -168,6 +168,7 @@
 		$("#pdsmallimages").val(image);
 		$("#pdthumbnail").val(image);
 		$("#pdprice").val(rprice);
+		$("#pdspclprice").val(sPrice);
 		$("#successmsg").hide();
 		$("#failsmsg").hide();
 	 	 
@@ -219,7 +220,7 @@
 	    	        	 	 $("#successmsg").css('float','left');
     	        	 	setTimeout(function() {
 	    	        	 	$("#modalclose").click();
-    	        	 	}, 3000);
+    	        	 	}, 1500);
     	    	},
     	    error:function(data) {
     	    	$("#failsmsg").show();
