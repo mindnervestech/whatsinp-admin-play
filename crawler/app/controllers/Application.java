@@ -97,20 +97,34 @@ public static String root;
 				productDetails.category_ids = productDetails.category_ids.replace("[", "");
 				productDetails.category_ids = productDetails.category_ids.replace("]", "");
 				productDetails.category_ids = productDetails.category_ids.replace("\"", "");
-
-				productDetails.name = form.get("pdname");
-				productDetails.url_key = form.get("pdurlkey");
+				if(productDetails.category_ids.length() == 0) {
+					throw new RuntimeException();
+				}
+				productDetails.name = form.get("pdproname");//form.get("pdname");
+				
 				productDetails.meta_title = form.get("pdmetatitle");
 				productDetails.meta_description = form.get("pdmetadesc");
 				productDetails.image = form.get("pdimages");
 				productDetails.small_image = form.get("pdimages");
 				productDetails.thumbnail = form.get("pdthumbnail");
 				productDetails.rotator_image = form.get("pdrotatorimage");
-				productDetails.image_label = form.get("pdimagelabel");
-				productDetails.url_path = form.get("pdurlpath");
-				productDetails.weight = Double.parseDouble(form.get("pdweight"));
+				productDetails.image_label = form.get("pdproname");//form.get("pdimagelabel");
+				productDetails.url_path = form.get("pdproname");//form.get("pdurlpath");
+				productDetails.url_path = "/"+productDetails.url_path.trim().replace(" ", "-").toLowerCase();
+				productDetails.url_key = productDetails.url_path;//form.get("pdurlkey");
+				
+				try {
+					productDetails.weight = Double.parseDouble(form.get("pdweight"));
+				}catch (Exception e) {
+					productDetails.weight = 0.0;
+				}
+				
 				productDetails.price = Double.parseDouble(form.get("pdprice"));
-				productDetails.special_price = Double.parseDouble(form.get("pdspclprice"));
+				try {
+					productDetails.special_price = Double.parseDouble(form.get("pdspclprice"));
+				}catch (Exception e) {
+					productDetails.special_price = Double.parseDouble(form.get("pdprice"));
+				}
 				productDetails.description = form.get("pddesc");
 				productDetails.short_description = form.get("pdshortdesc");
 				productDetails.meta_keyword = form.get("pdmetakeywords");

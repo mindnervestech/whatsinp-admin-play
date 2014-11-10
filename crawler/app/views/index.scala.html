@@ -87,12 +87,12 @@
 		    		
 				</select>	
       			<!-- <input type="text" name="pdcategories" required> -->
-	  			<label>Name</label>
+	  			<!-- <label>Name</label>
       			<input type="text" id="pdname" name="pdname" required>
-	  			
-	  			<label>Url Key</label>
+	  			 -->
+	  			<!-- <label>Url Key</label>
       			<input type="text" id="pdurlkey" name="pdurlkey" required>
-	  			
+	  			 -->
 	  			<label>Meta Title</label>
       			<input type="text" id="pdmetatitle" name="pdmetatitle" required>
 	  			
@@ -111,12 +111,12 @@
 	  			<label>Rotator Image</label>
       			<input type="text" id="pdrotatorimage" name="pdrotatorimage" required>
 	  			
-	  			<label>Image Label</label>
+	  			<!-- <label>Image Label</label>
       			<input type="text" id="pdimagelabel" name="pdimagelabel" required>
-	  			
-	  			<label>URL Path</label>
+	  			 -->
+	  			<!-- <label>URL Path</label>
       			<input type="text" id="pdurlpath" name="pdurlpath" required>
-	  			
+	  			 -->
 	  			<label>Weight(number)</label>
       			<input value="0" type="text" id="pdweight" name="pdweight" required>
 	  			
@@ -143,7 +143,7 @@
       </div>
       <div class="modal-footer">
       	<label id="successmsg" style="display:none;">Data Added / Updated Successfully</label>
-      	<label id="updatemsg" style="display:none;">Please Update The Data</label>
+      	<label id="failsmsg" style="display:none;">Error, missed some thing</label>
         <button type="button" class="btn btn-default" data-dismiss="modal" id="modalclose">Close</button>
         <button type="button" class="btn btn-primary" id="saveButton">Save changes</button>
       </div>
@@ -158,16 +158,19 @@
 	var status;
 	function myfunc(rowId,name,image,rprice) {
 		Id = rowId;
-		$("#pdimagelabel").val(name);
+		//$("#pdimagelabel").val(name);
 		$("#pdsku").val(name);
 		$("#pdproname").val(name);
-		$("#pdname").val(name);
-		$("#pdurlkey").val("/"+name);
-		$("#pdurlpath").val("/"+name);
+		//$("#pdname").val(name);
+		//$("#pdurlkey").val("/"+name);
+		//$("#pdurlpath").val("/"+name);
 		$("#pdimages").val(image);
 		$("#pdsmallimages").val(image);
 		$("#pdthumbnail").val(image);
 		$("#pdprice").val(rprice);
+		$("#successmsg").hide();
+		$("#failsmsg").hide();
+	 	 
 	}
 
     
@@ -188,16 +191,16 @@
     			  pdproname:$("#pdproname").val(),
     			  pdsku:$("#pdsku").val(),
     			  pdcategories :jsonString,
-    			  pdname:$("#pdname").val(),
-    			  pdurlkey:$("#pdurlkey").val(),
+    			  //pdname:$("#pdname").val(),
+    			  //pdurlkey:$("#pdurlkey").val(),
     			  pdmetatitle:$("#pdmetatitle").val(),
     			  pdmetadesc:$("#pdmetadesc").val(),
     			  pdimages:$("#pdimages").val(),
     			  pdsmallimages:$("#pdsmallimages").val(),
     			  pdthumbnail:$("#pdthumbnail").val(),
     			  pdrotatorimage:$("#pdrotatorimage").val(),
-    			  pdimagelabel:$("#pdimagelabel").val(),
-    			  pdurlpath:$("#pdurlpath").val(),
+    			  //pdimagelabel:$("#pdimagelabel").val(),
+    			  //pdurlpath:$("#pdurlpath").val(),
     			  pdweight:$("#pdweight").val(),
     			  pdprice:$("#pdprice").val(),
     			  pdspclprice:$("#pdspclprice").val(),
@@ -211,13 +214,18 @@
 		    	        console.log('success');
 		    	        $("input:text").val("");
 		    	        $("textarea").val("");
-	    	        	 	 $("#successmsg").css('display','block');
-	    	        	 	 $("#updatemsg").css('display','none');
+	    	        	 	 $("#successmsg").show();
+	    	        	 	$("#failsmsg").hide();
 	    	        	 	 $("#successmsg").css('float','left');
     	        	 	setTimeout(function() {
 	    	        	 	$("#modalclose").click();
     	        	 	}, 3000);
-    	    	}
+    	    	},
+    	    error:function(data) {
+    	    	$("#failsmsg").show();
+    	    	$("#failsmsg").css('float','left');
+    	    }	
+    	    	
     	   });
     });
     
