@@ -45,42 +45,29 @@ public static String root;
 }
 
     public static Result index() {
-    	List<ScrappedData> datas = Ebean.find(ScrappedData.class).findList();
+    	List<ScrappedData> datas = Ebean.find(ScrappedData.class).where().eq("status",0).findList();
     	List<SqlRow> siteNames = Ebean.createSqlQuery("Select distinct site, date from scrapped_data").findList();
     	List<String> sname = new ArrayList<String>();
-    	List<SqlRow> _date = Ebean.createSqlQuery("Select distinct date from scrapped_data").findList();
     	List<String> dateFilter = new ArrayList<String>();
     	for(SqlRow site :siteNames){
     		sname.add(site.getString("site"));
     	}
-    	for(SqlRow site :_date){
-    		//dateFilter.add(site.getDate("date").toString());
-    	}
-    	System.out.println(sname);
         return ok(index.render(datas, sname, dateFilter) );
     }
     
     public static Result saveKeyValue() {
 		DynamicForm form = DynamicForm.form().bindFromRequest();
-		//System.out.println("form: "+form);
 		ScrappedData scrappedData = ScrappedData.findById(Long.parseLong(form.get("Id")));
-		//System.out.println("Before if");
-		try
-		{
-			if(!scrappedData.getProductDetails().toString().trim().equals("")) 
+		
+			if(scrappedData.getProductDetails()!=null) 
 			{
-				System.out.println("In if"+scrappedData.getProductDetails().id);
 				ProductDetails productDetails = ProductDetails.findById(scrappedData.getProductDetails().id);
 				productDetails.setProduct_name(form.get("pdproname"));
 				productDetails.setSku(form.get("pdsku"));
-				//System.out.print(form.get("pdcategories"));
 				String pdcategories = form.get("pdcategories");
-				//System.out.println("pdcategories"+pdcategories);
-				
 				pdcategories = pdcategories.replace("[", "");
 				pdcategories = pdcategories.replace("]", "");
 				pdcategories = pdcategories.replace("\"", "");
-				System.out.println(pdcategories);
 				productDetails.setCategory_ids(pdcategories);
 				
 				productDetails.setName(form.get("pdname"));
@@ -102,38 +89,38 @@ public static String root;
 				productDetails.setSpecial_from_date(form.get("pdspclfromdate"));
 				
 				productDetails.update();
-			} 
-		} catch(NullPointerException e) {
-			System.out.println("In Else");
-			ProductDetails productDetails = new ProductDetails();
-			productDetails.product_name = form.get("pdproname");
-			productDetails.sku = form.get("pdsku");
-			productDetails.category_ids = form.get("pdcategories");
-			productDetails.name = form.get("pdname");
-			productDetails.url_key = form.get("pdurlkey");
-			productDetails.meta_title = form.get("pdmetatitle");
-			productDetails.meta_description = form.get("pdmetadesc");
-			productDetails.image = form.get("pdimages");
-			productDetails.small_image = form.get("pdimages");
-			productDetails.thumbnail = form.get("pdthumbnail");
-			productDetails.rotator_image = form.get("pdrotatorimage");
-			productDetails.image_label = form.get("pdimagelabel");
-			productDetails.url_path = form.get("pdurlpath");
-			productDetails.weight = Double.parseDouble(form.get("pdweight"));
-			productDetails.price = Double.parseDouble(form.get("pdprice"));
-			productDetails.special_price = Double.parseDouble(form.get("pdspclprice"));
-			productDetails.description = form.get("pddesc");
-			productDetails.short_description = form.get("pdshortdesc");
-			productDetails.meta_keyword = form.get("pdmetakeywords");
-			productDetails.special_from_date = form.get("pdspclfromdate");
-			
-			productDetails.save();
-	        
-	        scrappedData.setProductDetails(productDetails);
-	        System.out.println(form.get("pdproname"));
-	        scrappedData.setKeyValue(form.get("values"));
-	        scrappedData.update();
-		}
+			}  else {
+				ProductDetails productDetails = new ProductDetails();
+				productDetails.product_name = form.get("pdproname");
+				productDetails.sku = form.get("pdsku");
+				productDetails.category_ids = form.get("pdcategories");
+				productDetails.category_ids = productDetails.category_ids.replace("[", "");
+				productDetails.category_ids = productDetails.category_ids.replace("]", "");
+				productDetails.category_ids = productDetails.category_ids.replace("\"", "");
+
+				productDetails.name = form.get("pdname");
+				productDetails.url_key = form.get("pdurlkey");
+				productDetails.meta_title = form.get("pdmetatitle");
+				productDetails.meta_description = form.get("pdmetadesc");
+				productDetails.image = form.get("pdimages");
+				productDetails.small_image = form.get("pdimages");
+				productDetails.thumbnail = form.get("pdthumbnail");
+				productDetails.rotator_image = form.get("pdrotatorimage");
+				productDetails.image_label = form.get("pdimagelabel");
+				productDetails.url_path = form.get("pdurlpath");
+				productDetails.weight = Double.parseDouble(form.get("pdweight"));
+				productDetails.price = Double.parseDouble(form.get("pdprice"));
+				productDetails.special_price = Double.parseDouble(form.get("pdspclprice"));
+				productDetails.description = form.get("pddesc");
+				productDetails.short_description = form.get("pdshortdesc");
+				productDetails.meta_keyword = form.get("pdmetakeywords");
+				productDetails.special_from_date = form.get("pdspclfromdate");
+				productDetails.save();
+		        scrappedData.setProductDetails(productDetails);
+		        scrappedData.setStatus(1);
+		        scrappedData.update();
+			}
+		
     	return ok();
     }
     public static Result getValues() {
@@ -145,17 +132,13 @@ public static String root;
     	
     	return ok(Json.toJson(productDetails));
     }
-    public static Result changeStatus() {
+    
+    public static Result delete() {
     	
 		DynamicForm form = DynamicForm.form().bindFromRequest();
 		
         ScrappedData scrappedData = ScrappedData.findById(Long.parseLong(form.get("Id")));
-        if(form.get("status").equals("true")) {
-        	scrappedData.setStatus(true);
-        }
-        if(form.get("status").equals("false")) {
-        	scrappedData.setStatus(false);
-        }
+        scrappedData.setStatus(2);
         scrappedData.update();
     	return ok();
     }
@@ -163,36 +146,27 @@ public static String root;
     public static Result LoadDataBySiteName() {
     	DynamicForm requestData = Form.form().bindFromRequest();
     	String site_name = requestData.get("site");
-    	String date = requestData.get("dateFilter");
     	String status = requestData.get("approvedstatus");
-    	boolean flag = false;
+    	int flag = 0;
     	if(status.equals("1")) {
-        	flag = true;
+        	flag = 1;
         }
         if(status.equals("0")) {
-        	flag = false;
+        	flag = 0;
         }
         
-    	System.out.println("sitename = "+date);
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    	Date selectedDate = null;
-    	try {
-    		selectedDate = sdf.parse(date);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
+        if(status.equals("2")) {
+        	flag = 2;
+        }
+        
+    	
     	List<ScrappedData> datas = Ebean.find(ScrappedData.class).where().eq("site", site_name).eq("status", flag).findList();
     	
     	List<SqlRow> siteNames = Ebean.createSqlQuery("Select distinct site, date from scrapped_data").findList();
     	List<String> sname = new ArrayList<String>();
-    	List<SqlRow> _date = Ebean.createSqlQuery("Select distinct date from scrapped_data").findList();
     	List<String> dateFilter = new ArrayList<String>();
     	for(SqlRow site :siteNames){
     		sname.add(site.getString("site"));
-    	}
-    	for(SqlRow site :_date){
-    		//dateFilter.add(site.getDate("date").toString());
     	}
     	
     	return ok(index.render(datas, sname, dateFilter));

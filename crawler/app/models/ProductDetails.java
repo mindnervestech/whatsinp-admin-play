@@ -25,7 +25,7 @@ public class ProductDetails extends Model {
 
 	public String sku;
 
-	public String has_options = "0";
+	public int has_options = 0;
 
 	public String name;
 
@@ -220,11 +220,11 @@ public class ProductDetails extends Model {
 		this.sku = sku;
 	}
 
-	public String getHas_options() {
+	public int getHas_options() {
 		return has_options;
 	}
 
-	public void setHas_options(String has_options) {
+	public void setHas_options(int has_options) {
 		this.has_options = has_options;
 	}
 

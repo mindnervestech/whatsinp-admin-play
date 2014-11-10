@@ -8,6 +8,6 @@ GET     /loadData 					controllers.Application.LoadDataBySiteName()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 POST	/saveKeyValue				controllers.Application.saveKeyValue()
-POST	/changeStatus				controllers.Application.changeStatus()
+POST	/delete				controllers.Application.delete()
 POST	/getValues					controllers.Application.getValues()
 GET		/CSV						controllers.Application.generateCSVFile()

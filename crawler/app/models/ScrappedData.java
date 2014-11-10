@@ -35,7 +35,7 @@ public class ScrappedData extends Model {
 	
 	public String keyValue;
 	
-	public boolean status;
+	public int status;
 	
 	@OneToOne
 	public ProductDetails productDetails;
@@ -49,11 +49,11 @@ public class ScrappedData extends Model {
 		this.productDetails = productDetails;
 	}
 
-	public boolean isStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

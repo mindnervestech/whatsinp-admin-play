@@ -15,25 +15,15 @@
 			    	}
 			    }
 			</select>
-		<!--  <select name = "dateFilter">
-				 @for(data <- dateFilter) {
-			    	@if(data != null ) {
-			    		<option  value="@data">@data</option>	
-			    	}
-			    }
-			</select> -->
+		
 			<select name = "approvedstatus">
-	    		<option value="1">Approved</option>
 	    		<option value="0">Not-Approved</option>
+	    		<option value="1">Approved</option>
+	    		<option value="2">Deleted</option>
 			</select>	
 	<input type="submit" value="Submit">
 	</form>
-	<!-- <form class="form-horizontal" role="form">
-		<div style = "margin-top: 2%;" "class="form-group">
-			
-			<button type="submit" onClick = "loadData()" class="btn btn-default" data-dismiss="modal">Submit</button>
-		</div>
-	</form> -->
+	
 	<table class="table table-striped table-bordered">
     @for(data <- datas) {
     	@if(!data.name.isEmpty || data.name.length > 0) {
@@ -52,12 +42,10 @@
     				Special Price: @data.specialPrice
     			</td>
     			<td>
-    				@if(data.status == true) {
-    				<input type="button" value="Update" id="updatebutton" data-toggle="modal" data-target="#myModal" onclick="myfunc(@data.id)">
-    				}
-    				@if(data.status == false) {
-    				<input type="button" value="Approve" id="approvebutton" data-toggle="modal" data-target="#myModal" onclick="myfunc(@data.id)">
-    				}
+    				
+    				<input type="button" value="Approve" id="approvebutton" data-toggle="modal" data-target="#myModal" onclick="myfunc(@data.id)" >
+    				<input type="button" value="Delete" class="deletebutton" did="@data.id">
+    				
     			</td>
     		</tr>
     	}
@@ -79,8 +67,10 @@
 	  		<div id="TextBoxDiv1" class="submitform">
 	  			<label>Product Name</label>
       			<input type="text" id="pdproname" name="pdproname" required>
+	  			
 	  			<label>SKU</label>
       			<input type="text" id="pdsku" name="pdsku" required>
+	  			
 	  			<label>Category Id</label>
 				<select name = "pdcategories" id="pdcategories" multiple>
 		    		<option value="22">handicraft</option>
@@ -91,41 +81,59 @@
 		    		<option value="4">rajasthan</option>
 		    		<option value="5">punjab</option>
 		    		<option value="28">punjab-food</option>
+		    		<option value="29">Chhattisgarh</option>
+		    		<option value="30">chhattisgarh-handicraft</option>
 		    		
 				</select>	
       			<!-- <input type="text" name="pdcategories" required> -->
 	  			<label>Name</label>
       			<input type="text" id="pdname" name="pdname" required>
+	  			
 	  			<label>Url Key</label>
       			<input type="text" id="pdurlkey" name="pdurlkey" required>
+	  			
 	  			<label>Meta Title</label>
       			<input type="text" id="pdmetatitle" name="pdmetatitle" required>
+	  			
 	  			<label>Meta Description</label>
       			<textarea id="pdmetadesc" name="pdmetadesc" required></textarea>
+	  			
 	  			<label>Images</label>
       			<input type="text" id="pdimages" name="pdimages" required>
+	  			
 	  			<label>Small Image</label>
       			<input type="text" id="pdsmallimages" name="pdsmallimages" required>
+	  			
 	  			<label>Thumbnail</label>
       			<input type="text" id="pdthumbnail" name="pdthumbnail" required>
+	  			
 	  			<label>Rotator Image</label>
       			<input type="text" id="pdrotatorimage" name="pdrotatorimage" required>
+	  			
 	  			<label>Image Label</label>
       			<input type="text" id="pdimagelabel" name="pdimagelabel" required>
+	  			
 	  			<label>URL Path</label>
       			<input type="text" id="pdurlpath" name="pdurlpath" required>
+	  			
 	  			<label>Weight(number)</label>
       			<input type="text" id="pdweight" name="pdweight" required>
+	  			
 	  			<label>Price(number)</label>
       			<input type="text" id="pdprice" name="pdprice" required>
+	  			
 	  			<label>Special Price(number)</label>
       			<input type="text" id="pdspclprice" name="pdspclprice" required>
+	  			
 	  			<label>Description</label>
       			<textarea id="pddesc" name="pddesc" required></textarea>
+	  			
 	  			<label>Short Description</label>
       			<textarea id="pdshortdesc" name="pdshortdesc" required></textarea>
+	  			
 	  			<label>Meta Keywords</label>
       			<input type="text" id="pdmetakeywords" name="pdmetakeywords" required>
+	  			
 	  			<label>Special From Date</label>
       			<input type="text" id="pdspclfromdate" name="pdspclfromdate" required>
       		</div>
@@ -149,25 +157,8 @@
 	var status;
 	function myfunc(rowId) {
 		Id = rowId;
-		console.log(Id);
 	}
- 
- 
-	var counter = 2;
-	
-    $("#addButton").click(function () {
-    	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", 'TextBoxDiv' + counter);
 
-		newTextBoxDiv.after().html('<input type="text" name="key' + counter + 
-			      '" id="key' + counter + '" value="" >  ' +
-		      '<input type="text" name="value' + counter + 
-		      '" id="value' + counter + '" value="" >');
-	
-		newTextBoxDiv.appendTo("#TextBoxesGroup");
-	
-		counter++;
-    });
     
     $("#saveButton").click(function () {
     	console.log(Id);
@@ -219,65 +210,18 @@
     	   });
     });
     
-    $('.table input[type=checkbox]').click(function(){
-        if($(this).is(":checked")) {
-        	status = 'true';
-        	console.log(status);
-        	 $('.table #'+Id).css('display','none'); 
-        } else {
-        	status = 'false';
-        	console.log(status);
-         	 $('.table #'+Id).css('display','none'); 
-        }
+    $('.deletebutton').click(function(){
+    	var id = $(this).attr("did");
         $.ajax({
-    		url: "/changeStatus",
+    		url: "/delete",
     		  type: "POST",
-    		  data: {status:status,
-    					Id:Id},  
+    		  data: {status:2,
+    					Id:id},  
     	      success:function(data) {
-    	        console.log('success');
     	       
     	      }
     	   });
     }); 
 
-    $("#updatebutton").click(function () {
-    	console.log(Id);
-    	
-    	$.ajax({
-    		url: "/getValues",
-    		  type: "POST",
-    		  data: {Id:Id},  
-    	      success:function(response) {
-		    	        console.log('update form');
-		    	        console.log(response);
-		    	        //console.log(response.price);
-		    	        
-		    			  $("#pdproname").val(response.product_name),
-		    			  $("#pdsku").val(response.sku),
-		    			  $("#pdcategories").val(response.category_ids),
-		    			  $("#pdname").val(response.name),
-		    			  $("#pdurlkey").val(response.url_key),
-		    			  $("#pdmetatitle").val(response.meta_title),
-		    			  $("#pdmetadesc").val(response.meta_description),
-		    			  $("#pdimages").val(response.image),
-		    			  $("#pdsmallimages").val(response.small_image),
-		    			  $("#pdthumbnail").val(response.thumbnail),
-		    			  $("#pdrotatorimage").val(response.rotator_image),
-		    			  $("#pdimagelabel").val(response.image_label),
-		    			  $("#pdurlpath").val(response.url_path),
-		    			  $("#pdweight").val(response.weight),
-		    			  $("#pdprice").val(response.price),
-		    			  $("#pdspclprice").val(response.special_price),
-		    			  $("#pddesc").val(response.description),
-		    			  $("#pdshortdesc").val(response.short_description),
-		    			  $("#pdmetakeywords").val(response.meta_keyword),
-		    			  $("#pdspclfromdate").val(response.special_from_date),
 
-	    	        	 	 $("#successmsg").css('display','none');
-	    	        	 	 $("#updatemsg").css('display','block');
-	    	        	 	 $("#updatemsg").css('float','left');
-    	    	}
-    	   });
-    });
 </script>
