@@ -17,7 +17,7 @@ public class ProductDetails extends Model {
 
 	public String websites = "base";
 
-	public String attribute_set = "default";
+	public String attribute_set = "Default";
 
 	public String type = "simple";
 
@@ -25,7 +25,7 @@ public class ProductDetails extends Model {
 
 	public String sku;
 
-	public Boolean has_options = false;
+	public String has_options = "0";
 
 	public String name;
 
@@ -73,7 +73,7 @@ public class ProductDetails extends Model {
 
 	public String msrp = "";
 
-	public String status = "enabled";
+	public String status = "Enabled";
 
 	public String visibility = "Catalog, Search";
 
@@ -220,11 +220,11 @@ public class ProductDetails extends Model {
 		this.sku = sku;
 	}
 
-	public Boolean getHas_options() {
+	public String getHas_options() {
 		return has_options;
 	}
 
-	public void setHas_options(Boolean has_options) {
+	public void setHas_options(String has_options) {
 		this.has_options = has_options;
 	}
 
